@@ -8,6 +8,11 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// error handling
+app.use('/*', (req, res) => {
+    res.status(404).send({ message: 'Not Found' });
+});
+
 // POST /test
 app.post("/test", (req, res) => {
     try {
