@@ -72,8 +72,8 @@ const Home = () => {
       body: JSON.stringify(data)
     }).then(response => response.json()).then(result => {
       setResult(JSON.stringify(result));
-    }).catch(error => {
-      console.error('Error:', error);
+    }).catch(err => {
+      console.error('Error:', err);
     });
   };
 

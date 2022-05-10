@@ -22,8 +22,8 @@ const Home = () => {
             .then(result => {
                 setResult(JSON.stringify(result));
             })
-            .catch((error) => {
-                console.error('Error:', error);
+            .catch((err) => {
+                console.error('Error:', err);
             });
     }
 
