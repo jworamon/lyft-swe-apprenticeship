@@ -1,5 +1,4 @@
 const cutString = (str) => {
-    console.log('length', str.length);
     let result = '';
     for (let i = 0; i < str.length; i++) {
         // add only every 3rd letter to result string
