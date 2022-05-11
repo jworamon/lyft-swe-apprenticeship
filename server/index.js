@@ -7,31 +7,34 @@ const app = express();
 
 // body parsing middleware
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 // static middleware
 app.use(express.static(path.join(__dirname, '../public')));
 
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/index.html'))
+});
+
 // POST request for /test
-app.post("/test", (req, res) => {
+app.post("/test", (req, res, next) => {
     try {
         const str_to_cut = req.body.string_to_cut;
+        if (typeof str_to_cut !== 'string') {
+            res.status(400).json({ message: 'Invalid Argument: string_to_cut must be a string' });
+        }
         const result = cutString(str_to_cut);
         res.status(201).json({ return_string: result });
     } catch (err) {
-        console.log(err);
+        res.status(500).json({ message: `Error: ${err.message}` });
     }
 });
 
-// send index.html for all other requests
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../public/index.html'));
-});
-
 // error handling middleware
-app.use('/*', (req, res) => {
+app.use('*', (req, res) => {
     res.status(404).send({ message: 'Not Found' });
 });
+
+
 
 app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
