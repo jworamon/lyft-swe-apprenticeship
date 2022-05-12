@@ -30,8 +30,8 @@ const Home = () => {
     }
 
     return (
-        <div>
-            <form onSubmit={handleSubmit} >
+        <div className="home">
+            <form className="input-form" onSubmit={handleSubmit}>
                 <label htmlFor="inputString" />
                 <input
                     name="string_to_cut"
@@ -43,8 +43,8 @@ const Home = () => {
                 <label htmlFor="submit"></label>
                 <button type="submit">Submit</button>
             </form>
-            {result && <div>{result}</div>}
-            {error && <div>{error.message}</div>}
+            {result && <div className="result">{result}</div>}
+            {error && <div className="error">{error.message}</div>}
         </div>
     )
 }
