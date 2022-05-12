@@ -8,7 +8,7 @@ const __fileName = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__fileName);
 
 export default {
-  entry: ['./client/main'],
+  entry: ['babel-polyfill', './client/main'],
   output: {
     path: __dirname,
     filename: './public/bundle.js'

@@ -12,10 +12,14 @@ import {setupServer} from 'msw/node'
 import {render, fireEvent, waitFor, screen} from '@testing-library/react'
 import '@testing-library/jest-dom'
 import Home from '../client/components/Home'
+import fetchMock from 'jest-fetch-mock';
+fetchMock.enableMocks();
+
+fetchMock.mockResponseOnce(JSON.stringify({return_string: 'muyvd'}))
 
 const server = setupServer(
   rest.post('/test', (req, res, ctx) => {
-    return res(ctx.json({return_string: 'muyvd'}));
+    return res(ctx.json({return_string: ''}));
   }),
 );
 
@@ -23,11 +27,11 @@ beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
-test('loads and displays greeting', async () => {
-    render(Home);
+it('loads and displays greeting', async () => {
+    render(<Home />);
     fireEvent.click(screen.getByText('Submit'));
     await waitFor(() => screen.getByTestId('result'));
   
-    expect(screen.getByTestId('result')).toHaveTextContent('');
+    expect(screen.getByTestId('result')).toHaveTextContent(JSON.stringify({return_string: 'muyvd'}));
 });
 

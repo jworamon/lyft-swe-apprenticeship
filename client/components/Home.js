@@ -19,7 +19,9 @@ const Home = () => {
             },
             body: JSON.stringify(data),
         });
+        console.log("----------", response)
         const responseJSON = await response.json();
+        console.log("----------", responseJSON)
         if (!response.ok) {
             setError(responseJSON);
             setResult(null);
@@ -43,7 +45,7 @@ const Home = () => {
                 <label htmlFor="submit"></label>
                 <button type="submit">Submit</button>
             </form>
-            {result && <div className="result">{result}</div>}
+            {result && <div className="result" data-testid="result">{result}</div>}
             {error && <div className="error">{error.message}</div>}
         </div>
     )
