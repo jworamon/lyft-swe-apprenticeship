@@ -26,6 +26,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.17.10",
+    "@babel/node": "^7.17.10",
+    "@babel/preset-env": "^7.17.10",
     "@babel/preset-react": "^7.16.7",
     "@babel/register": "^7.17.7",
     "@testing-library/jest-dom": "^5.16.4",

@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { cutString } from '../server/util.js';
+import cutString from '../server/util.js';
 
 // const { expect } = require('chai');
 // const { cutString } = require('../server/util');
