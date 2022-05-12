@@ -1,5 +1,8 @@
-const { expect } = require('chai');
-const { cutString } = require('../server/util');
+import { expect } from 'chai';
+import { cutString } from '../server/util.js';
+
+// const { expect } = require('chai');
+// const { cutString } = require('../server/util');
 
 describe('cutString', () => {
     it('returns a string', () => {

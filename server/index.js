@@ -1,8 +1,15 @@
-const express = require('express');
-const path = require('path');
+import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
 const PORT = process.env.PORT || 3001;
-const { cutString } = require('./util');
+import cutString from './util.js';
 
+// const express = require('express');
+// const path = require('path');
+// const PORT = process.env.PORT || 3001;
+// const { cutString } = require('./util');
+const __fileName = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__fileName);
 const app = express();
 
 // body parsing middleware
@@ -18,6 +25,7 @@ app.get('/', (req, res) => {
 // POST request for /test
 app.post("/test", (req, res, next) => {
     try {
+
         const str_to_cut = req.body.string_to_cut;
         if (typeof str_to_cut !== 'string') {
             res.status(400).json({ message: 'Invalid Argument: string_to_cut must be a string' });
