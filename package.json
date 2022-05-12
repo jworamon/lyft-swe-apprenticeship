@@ -42,7 +42,6 @@
     "jest-environment-jsdom": "^28.1.0",
     "jest-fetch-mock": "^3.0.3",
     "jsdom": "^19.0.0",
-    "msw": "^0.39.2",
     "nodemon": "^2.0.16",
     "webpack": "^5.72.1",
     "webpack-cli": "^4.9.2"

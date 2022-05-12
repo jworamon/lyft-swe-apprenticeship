@@ -34,8 +34,9 @@ const Home = () => {
     return (
         <div className="home">
             <form className="input-form" onSubmit={handleSubmit}>
-                <label htmlFor="inputString" />
+                <label htmlFor="input-string">Input</label>
                 <input
+                    id="input-string"
                     name="string_to_cut"
                     placeholder="Enter a string here"
                     onChange={handleChange}
@@ -46,7 +47,7 @@ const Home = () => {
                 <button type="submit">Submit</button>
             </form>
             {result && <div className="result" data-testid="result">{result}</div>}
-            {error && <div className="error">{error.message}</div>}
+            {error && <div className="error" data-testid="error">{error.message}</div>}
         </div>
     )
 }

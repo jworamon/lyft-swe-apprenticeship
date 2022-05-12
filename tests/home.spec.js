@@ -1,37 +1,43 @@
-// const React = require('react');
-// const { rest } = require('msw');
-// const { setupServer } = require('msw/node');
-// const { render, fireEvent, waitFor, screen } = require('@testing-library/react');
-// const { expect } = require('chai');
-// // require('@testing-library/jest-dom');
-// const Home = require('../client/components/Home');
-
 import React from 'react'
-import {rest} from 'msw'
-import {setupServer} from 'msw/node'
-import {render, fireEvent, waitFor, screen} from '@testing-library/react'
+import { render, fireEvent, waitFor, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import Home from '../client/components/Home'
 import fetchMock from 'jest-fetch-mock';
+
 fetchMock.enableMocks();
 
-fetchMock.mockResponseOnce(JSON.stringify({return_string: 'muyvd'}))
+describe('Home component', () => {
+	beforeEach(() => {
+		render(<Home />);
+	});
 
-const server = setupServer(
-  rest.post('/test', (req, res, ctx) => {
-    return res(ctx.json({return_string: ''}));
-  }),
-);
+	describe('when the form is filled', () => {
+		beforeEach(() => {
+			fireEvent.change(screen.getByLabelText('Input'), { target: { value: 'iamyourlyftdriver' } });
+		});
 
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
+		describe('and the request is successful', () => {
+			beforeEach(() => {
+				fetchMock.mockResponseOnce(JSON.stringify({ return_string: 'muyvd' }));
+				fireEvent.click(screen.getByText('Submit'));
+			});
+			it('displays the JSON response', async () => {
+				await waitFor(() => screen.getByTestId('result'));
+				expect(screen.getByTestId('result')).toHaveTextContent(JSON.stringify({ return_string: 'muyvd' }));
+			});
+		});
 
-it('loads and displays greeting', async () => {
-    render(<Home />);
-    fireEvent.click(screen.getByText('Submit'));
-    await waitFor(() => screen.getByTestId('result'));
-  
-    expect(screen.getByTestId('result')).toHaveTextContent(JSON.stringify({return_string: 'muyvd'}));
+		describe('and the request is failed', () => {
+			beforeEach(() => {
+				fetchMock.mockResponseOnce(JSON.stringify({ message: 'test error' }), { status: 500 });
+				fireEvent.click(screen.getByText('Submit'));
+			});
+			it('displays the error message', async () => {
+				await waitFor(() => screen.getByTestId('error'));
+				expect(screen.getByTestId('error')).toHaveTextContent('test error');
+			});
+		});
+	});
 });
+
 
