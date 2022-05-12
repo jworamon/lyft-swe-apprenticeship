@@ -1,8 +1,13 @@
 'use strict'
 
-const { resolve } = require('path')
+// import { resolve } from 'path';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-module.exports = {
+const __fileName = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__fileName);
+
+export default {
   entry: ['./client/main'],
   output: {
     path: __dirname,
