@@ -18,28 +18,35 @@ __webpack_require__.r(__webpack_exports__);
 
 const Home = () => {
   const [input, setInput] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-  const [result, setResult] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const [result, setResult] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
 
   const handleChange = evt => {
     setInput(evt.target.value);
   };
 
-  const handleSubmit = evt => {
+  const handleSubmit = async evt => {
     evt.preventDefault();
     const data = {
       string_to_cut: input
     };
-    fetch('/test', {
+    const response = await fetch('/test', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
-    }).then(response => response.json()).then(result => {
-      setResult(JSON.stringify(result));
-    }).catch(err => {
-      console.error('Error:', err);
     });
+    const responseJSON = await response.json();
+
+    if (!response.ok) {
+      setError(responseJSON);
+      setResult(null);
+    } else {
+      setResult(JSON.stringify(responseJSON)); // stringify to show the JSON response
+
+      setError(null);
+    }
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
@@ -47,7 +54,6 @@ const Home = () => {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
     htmlFor: "inputString"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    type: "text",
     name: "string_to_cut",
     placeholder: "Enter a string here",
     onChange: handleChange,
@@ -56,7 +62,7 @@ const Home = () => {
     htmlFor: "submit"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     type: "submit"
-  }, "Submit")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, result.length ? result : null));
+  }, "Submit")), result && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, result), error && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, error.message));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Home);
